@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- <link rel="stylesheet" href="test.css"> -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/sample.css') }}">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+      <script
+            src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
+      <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css"
+            rel="stylesheet">
+      <title>QnA System</title>
+</head>
+
+<body>
+      <nav>
+            <div class="container">
+                  <div class="nav-logo"><img src="{{ url_for('static', filename='logo.jpeg') }}" alt="Logo"></div>
+                  <div class="nav-links">
+                        <ul>
+                              <li><a href="/">Home</a></li>
+                              <li><a href="/sample">Sample Text - QA</a></li>
+                              <li><a href="/custom">Custom Text - QA</a></li>
+                        </ul>
+                  </div>
+                  <div class="nav-toggle"><span class=""></span></div>
+            </div>
+      </nav>
+      <div class="main">
+            <div class="input-container">
+                  <div class="text-input">
+                        <div class="passage-label">Custom Text</div>
+                        <span class="passage" id="passage" role="textbox" contenteditable>
+                              Enter your text.
+                        </span>
+                  </div>
+                  <button type="button" onclick="buildModel()">Build Model</button>
+                  <div class="text-input">
+                        <input type="text" id="question" name="question" placeholder="Enter your question">
+                        <label for="question">Question</label>
+                  </div>
+                  <div class="button-container">
+                        <button type="button" onclick="findAnswer()">Find Answer</button>
+                        <button type="button" id="kg_button">View KG</button>
+                  </div>
+                  <div id="answer"></div>
+            </div>
+      </div>
+      <div class="footer">
+
+            <div class="content">
+                  <div>
+                        <div><b>Sahil Gupta</b>: PES1UG19CS415</div>
+                        <div><b>Shreyas Devaraj</b>: PES1UG19CS466</div>
+                        <div><b>Spurthy Skandan</b>: PES1UG19CS501</div>
+                        <div><b>Susheen Kanungo</b>: PES1UG19CS527</div>
+                  </div>
+                  <div><img class="image" src="{{ url_for('static', filename='logo.jpeg') }}" alt="Logo">
+                        <p>©2022 PES UNIVERSITY</p>
+                  </div>
+            </div>
+      </div>
+      <script>
+            // Data
+            $('#editable-select').editableSelect();
+            const passage = "Leonardo DiCaprio was born on November 11, 1974. He can do acting and producing. He has acted in biopics. His films have earned US$7.2 billion. He has won an Academy Award and three Golden Globe Awards. He was born in Los Angeles. Manchester City Football Club is based in Manchester. It competes in the Premier League. It was known as Ardwick Association Football Club. Manchester City Football Club is referred as The Centurions and The Fourmidables. Its home ground is located in east Manchester. Its home ground is also known as CityofManchesterStadium. Shahrukh Khan was born on November 2, 1965. He has done 111 movies. Virat Kohli was born on November 5, 1988. He plays cricket. He plays for India. He also plays for RCB."
+            const question = "What can Virat Kohli play?"
+
+            $(document).ready(function () {
+                  // $("#question").attr("placeholder", question);
+                  $(".passage").text(passage);
+            });
+
+            async function answer(payload) {
+                  var answers = "Sorry. Model couldn't fetch the answer. Please rephrase or ask a different question."
+                  fetch('/submit', {
+                        "method": 'POST',
+                        "headers": { "Content-Type": "application/json" },
+                        "body": JSON.stringify(payload)
+                  })
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) {
+                              $("#answer").text((data))
+                              $("button").css("visibility", "visible");
+                        })
+                  console.log("answer fn", answers)
+            }
+
+            function buildModel() {
+                  var data = $(".passage").text()
+                  payload = {
+                        'data': data
+                  };
+                  fetch('/model', {
+                        "method": 'POST',
+                        "headers": { "Content-Type": "application/json" },
+                        "body": JSON.stringify(payload)
+                  })
+                        .then(function (res) { return res.json(); })
+
+                  // let fso = CreateObject("Scripting.FileSystemObject"); 
+                  // let s = fso.CreateTextFile("./content/test.txt", True);
+                  // s.writeline(data);
+                  // s.Close();
+            }
+            function findAnswer() {
+                  $("#answer").text("");
+                  const question = $("#question").val() || $("#question").attr('placeholder');
+                  const passage = document.getElementById("passage").innerText;
+                  payload = {
+                        'question': question
+                  };
+                  console.log(payload)
+                  answer(payload).then((answers) => {
+                        console.log("answer", answers)
+                  })
+                        .catch(err => {
+                              alert("Whoops")
+                              console.error(err)
+                        });
+            }
+      </script>
+      <script src="../static/script/nav.js"></script>
+</body>
+
+</html>

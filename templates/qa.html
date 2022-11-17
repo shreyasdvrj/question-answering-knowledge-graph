@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/test.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="input-container">
+        <div data-tabs class="tabs">
+            <div class="tab">
+                <input type="radio" name="tabgroup" id="tab-1" checked>
+                <label for="tab-1">Text 1</label>
+                <div class="tab__content">
+                    <div class="text-input">
+                        <div class="passage-label">Text 1</div>
+                        <span class="passage" id="passage" role="textbox" contenteditable="">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt libero ipsum, veniam magni
+                        modi exercitationem debitis ducimus assumenda ratione corporis, illum eius, laborum tempore
+                        cumque amet id perspiciatis nostrum unde?
+                        </span>
+                    </div>
+                    <div class="text-input">
+                        <input type="text" id="question" name="question" placeholder="Enter your question">
+                        <label for="question">Question</label>
+                    </div>
+                </div>
+            </div>
+            <div class="tab">
+                <input type="radio" name="tabgroup" id="tab-2">
+                <label for="tab-2">Text 2</label>
+                <div class="tab__content">
+                    <div class="text-input">
+                        <div class="passage-label">Text 2</div>
+                        <span class="passage" id="passage" role="textbox" contenteditable="">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt libero ipsum, veniam magni
+                        modi exercitationem debitis ducimus assumenda ratione corporis, illum eius, laborum tempore
+                        cumque amet id perspiciatis nostrum unde?
+                        </span>
+                    </div>
+                    <div class="text-input">
+                        <input type="text" id="question" name="question" placeholder="Enter your question">
+                        <label for="question">Question</label>
+                    </div>
+                </div>
+            </div>
+            <div class="tab">
+                <input type="radio" name="tabgroup" id="tab-3">
+                <label for="tab-3">Text 3</label>
+                <div class="tab__content">
+                    <div class="text-input">
+                        <div class="passage-label">Text 3</div>
+                        <span class="passage" id="passage" role="textbox" contenteditable="">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt libero ipsum, veniam magni
+                        modi exercitationem debitis ducimus assumenda ratione corporis, illum eius, laborum tempore
+                        cumque amet id perspiciatis nostrum unde?
+                        </span>
+                    </div>
+                    <div class="text-input">
+                        <input type="text" id="question" name="question" placeholder="Enter your question">
+                        <label for="question">Question</label>
+                    </div>
+                </div>
+            </div>
+            <div class="tab">
+                <input type="radio" name="tabgroup" id="tab-4">
+                <label for="tab-4">Tab 4</label>
+                <div class="tab__content">
+                    <div class="text-input">
+                        <div class="passage-label">Text 4</div>
+                        <span class="passage" id="passage" role="textbox" contenteditable="">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt libero ipsum, veniam magni
+                        modi exercitationem debitis ducimus assumenda ratione corporis, illum eius, laborum tempore
+                        cumque amet id perspiciatis nostrum unde?
+                        </span>
+                    </div>
+                    <div class="text-input">
+                        <input type="text" id="question" name="question" placeholder="Enter your question">
+                        <label for="question">Question</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="text-input">
+            <div class="passage-label">Sample Text</div>
+            <span class="passage" id="passage" role="textbox" contenteditable="">
+                Enter your text.
+            </span>
+        </div>
+        <div class="text-input">
+            <input type="text" id="question" name="question" placeholder="Enter your question">
+            <label for="question">Question</label>
+        </div> -->
+        <button type="button">Find Answer</button>
+        <div id="answer">{{qna_answer}}</div>
+    </div>
+    <script>
+        // Data
+        (function ($, document) {
+
+            // get tallest tab__content element
+            let height = -1;
+
+            $('.tab__content').each(function () {
+                height = height > $(this).outerHeight() ? height : $(this).outerHeight();
+                $(this).css('position', 'absolute');
+            });
+
+            // set height of tabs + top offset
+            $('[data-tabs]').css('min-height', height + 40 + 'px');
+
+        }(jQuery, document));
+        const passage = "Leonardo DiCaprio was born on November 11, 1974. He can do acting and producing. He has acted in biopics. His films have earned US$7.2 billion. He has won an Academy Award and three Golden Globe Awards. He was born in Los Angeles. Manchester City Football Club is based in Manchester. It competes in the Premier League. It was known as Ardwick Association Football Club. Manchester City Football Club is referred as The Centurions and The Fourmidables. Its home ground is located in east Manchester. Its home ground is also known as CityofManchesterStadium. Shahrukh Khan was born on November 2, 1965. He has done 111 movies. Virat Kohli was born on November 5, 1988. He plays cricket. He plays for India. He also plays for RCB."
+        const question = "What can Virat Kohli play?"
+
+        // $(document).ready(function () {
+        //     $("#question").attr("placeholder", question);
+        //     $(".passage").text(passage);
+        // });
+
+        async function answer() {
+            console.log('{{qna_answer}}')
+            return '{{qna_answer}}';
+        }
+
+        function buttonClick() {
+            $("#answer").text("");
+            const question = $("#question").val() || $("#question").attr('placeholder');
+            const passage = document.getElementById("passage").innerText;
+            const formData = new FormData();
+            formData.append('question', question);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/submit', true);
+            xhr.send(formData);
+            answer().then((answers) => {
+                $("#answer").text(answers)
+                $("button").css("visibility", "visible");
+            })
+                .catch(err => {
+                    alert("Whoops")
+                    console.error(err)
+                });
+        }
+
+        $("button").click(buttonClick);
+    </script>
+</body>
+
+</html>

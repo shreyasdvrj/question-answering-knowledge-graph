@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>QnA System using KG</title>
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+          <div class="nav-logo"><img src="{{ url_for('static', filename='logo.jpeg') }}" alt="Logo"></div>
+          <div class="nav-links">
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="/sample">Sample Text - QA</a></li>
+              <li><a href="/custom">Custom Text - QA</a></li>
+            </ul>
+          </div>
+          <div class="nav-toggle"><span class=""></span></div>
+        </div>
+      </nav>
+    <canvas id=c></canvas>
+    
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Question Answering System using<br /><strong> Knowledge Graphs</strong></h1>
+            <!-- <a class="btn" href="#open-modal-view">View Text</a>
+            <a class="btn" href="#open-modal-kg">View KG</a> -->
+            <a class="btn" href="/sample">Sample QA</a>
+            <a class="btn" href="/custom">Custom QA</a>
+        </div>
+        <br /><br /><br /><br />
+
+        <h2><strong> Links </strong></h2>
+        <div class="button-container">
+          <a href="https://drive.google.com/file/d/1MrJSPs_w7aGSugwzpPCcAapWvv4fDT7u/view?usp=sharing" class="colab-btn" target="_blank" rel="noopener">
+            <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" focusable="false" viewBox="0.17 5.07 23.67 13.87">
+              <g>
+                <path d="M4.54,9.46,2.19,7.1a6.93,6.93,0,0,0,0,9.79l2.36-2.36A3.59,3.59,0,0,1,4.54,9.46Z" fill="#E8710A"></path>
+                <path d="M2.19,7.1,4.54,9.46a3.59,3.59,0,0,1,5.08,0l1.71-2.93h0l-.1-.08h0A6.93,6.93,0,0,0,2.19,7.1Z" fill="#F9AB00"></path>
+                <path d="M11.34,17.46h0L9.62,14.54a3.59,3.59,0,0,1-5.08,0L2.19,16.9a6.93,6.93,0,0,0,9,.65l.11-.09" fill="#F9AB00"></path>
+                <path d="M12,7.1a6.93,6.93,0,0,0,0,9.79l2.36-2.36a3.59,3.59,0,1,1,5.08-5.08L21.81,7.1A6.93,6.93,0,0,0,12,7.1Z" fill="#F9AB00"></path>
+                <path d="M21.81,7.1,19.46,9.46a3.59,3.59,0,0,1-5.08,5.08L12,16.9A6.93,6.93,0,0,0,21.81,7.1Z" fill="#E8710A"></path>
+              </g>
+            </svg>
+            Open in Colab
+          </a>
+      </div>
+    
+    </div>
+
+    <div id="open-modal-view" class="modal-window">
+        <div>
+            <a href="#" title="Close" class="modal-close">Close</a>
+            <h1>Data</h1>
+            <p>{{data}}</p>
+        </div>
+    </div>
+    <div id="open-modal-kg" class="modal-window">
+        <div>
+            <a href="#" title="Close" class="modal-close">Close</a>
+            <h1>KG</h1>
+            <div>The Knowledge Graph created for the data</div>
+            <img src="{{ url_for('static', filename='kg.png') }}" alt="Knowledge Graph">
+        </div>
+    </div>
+
+
+
+<div class="footer">
+  
+  <div class="content">
+    <div>
+      <div><b>Sahil Gupta</b>: PES1UG19CS415</div>
+      <div><b>Shreyas Devaraj</b>: PES1UG19CS466</div>
+      <div><b>Spurthy Skandan</b>: PES1UG19CS501</div>
+      <div><b>Susheen Kanungo</b>: PES1UG19CS527</div>
+    </div>
+    <div><img class="image" src="{{ url_for('static', filename='logo.jpeg') }}" alt="Logo">
+      <p>©2022 PES UNIVERSITY</p>
+    </div>
+  </div>
+</div>
+
+    <script src="../static/script/background.js"></script>
+    <script src="../static/script/nav.js"></script>
+</body>
+
+</html>
