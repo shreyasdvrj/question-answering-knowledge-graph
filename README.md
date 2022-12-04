@@ -35,7 +35,7 @@ To run the code
 ```
 
 Go to [localhost:8000](http://127.0.0.1:8000/)
-- Sample text has pre-feined text with examples
+- Sample text has pre-defined text with examples
 - Custom text : User can enter own text
 - Click on `Build Model` to construct KG
 - Ask question to obtain answer
