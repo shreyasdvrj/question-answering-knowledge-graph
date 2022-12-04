@@ -1,0 +1,14 @@
+json
+spacy=3.4.2
+re
+inflect
+flask
+Flask
+redirect
+url_for
+request
+render_template
+jsonify
+pandas
+networkx
+matplotlib.pyplot
