@@ -16,12 +16,16 @@ def sample():
 def custom():
     return render_template('custom.html')
 
+@app.route('/img', methods = ["GET","POST"])
+def img():
+    return render_template('img.html')
+
 
 #Worker routes
-@app.route('/kg', methods = ['GET','POST'])
-def kg():
-    main.build_graph()
-    return "Building graph"
+# @app.route('/kg', methods = ['GET','POST'])
+# def kg():
+#     main.build_graph()
+#     return "Building graph"
 
 @app.route('/model',methods = ['GET','POST'])
 def model():

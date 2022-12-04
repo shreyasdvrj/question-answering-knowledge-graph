@@ -14,15 +14,15 @@ def build():
   dataEntities, numberOfPairs = entity.get_entity(refined_text)
   if dataEntities:
       dataEntities[0].to_json('./content/database.json', orient='index')
-  # graph.createGraph(dataEntities[0])
+  graph.createGraph(dataEntities[0])
   return input_data
 
-def build_graph():
-  input_file = open('./content/data.txt',"r+")
-  input_data, refined_text = preprocess.preprocess_text(input_file)
+# def build_graph():
+#   input_file = open('./content/data.txt',"r+")
+#   input_data, refined_text = preprocess.preprocess_text(input_file)
 
-  dataEntities, numberOfPairs = entity.get_entity(refined_text)
-  graph.createGraph(dataEntities[0])
+#   dataEntities, numberOfPairs = entity.get_entity(refined_text)
+#   graph.createGraph(dataEntities[0])
 
 def qna_system(ip_question):
   # ip_question=input("Enter your question. ")

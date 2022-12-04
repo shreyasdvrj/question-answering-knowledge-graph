@@ -325,3 +325,43 @@ def findanswer(question):
 
             if len(answer_obj)==0:
                       return temp, temp_sent
+
+#---------------------------------------------------QUESNTION NOT WHAT WHEN WHO WHERE-----------------------------------------------------
+
+        # elif 'can' in question.lower() or 'does' in question.lower():
+        else:
+
+            subjectQ = pair[0]
+            objectQ = pair[3]
+            placeQ = pair[5]
+            timeQ = pair[4]
+
+            for i in loaded:
+                
+                subjectS = loaded[str(i)]["source"]
+                objectS = loaded[str(i)]["target"]
+
+                #subjectQ = virat, subjectS = virat kohli
+                if subjectQ in (subjectS, objectS) or objectQ in (subjectS, objectS) or placeQ in (subjectS, objectS) or timeQ in (subjectS, objectS) or objectS in (subjectQ, objectQ, placeQ, timeQ) or subjectS in (subjectQ, objectQ, placeQ, timeQ):
+                    answer_sent = loaded[str(i)]["sentence"]
+                    if answer_sent not in sentenceList:
+                      sentenceList.append(answer_sent)
+                        
+
+                if ( int(i) < int(len(loaded)-1)):
+                    #more lines present in json to read
+                  pass
+
+            finalSentenceList=[]
+
+            for j in sentenceList :
+              if j != None:
+                finalSentenceList.append(j)
+
+
+            answer_obj = "None"
+            answer_sent = " ".join(finalSentenceList)
+            if len(answer_sent)==0:
+                answer_sent='None'
+
+            return answer_obj, answer_sent
